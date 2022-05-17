@@ -336,21 +336,23 @@ public class CRUD_JDBC {
 // SQL commands...
 
 /*
- * Here are all the table creation commands CREATE TABLE movies( sno INT
- * AUTO_INCREMENT, movieID VARCHAR(5), title VARCHAR(50) NOT NULL, genre
- * VARCHAR(30) NOT NULL, director VARCHAR(60) NOT NULL, release_year VARCHAR(50)
- * NOT NULL, PRIMARY KEY(sno) ); To check the INFROMATION SCHEMA OF column in
- * the database SELECT COLUMN_NAME, DATA_TYPE from INFORMATION_SCHEMA.COLUMNS
- * where table_schema = 'test' and table_name = 'movies';
+ * Here are all the table creation commands 
+   CREATE TABLE movies( sno INT
+   AUTO_INCREMENT, movieID VARCHAR(5), title VARCHAR(50) NOT NULL, genre
+   VARCHAR(30) NOT NULL, director VARCHAR(60) NOT NULL, release_year VARCHAR(50)
+   NOT NULL, PRIMARY KEY(sno) ); 
+   To check the INFROMATION SCHEMA OF column in the database 
+   SELECT COLUMN_NAME, DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where table_schema = 'test' and table_name = 'movies';
  */
 
 /*
- * DELETE FROM movies; INSERT INTO movies(sno, movieID, title, genre, director,
- * release_year) VALUES (1, "A001", "Requiem for a Dream",
- * "Psychological/Horror", "Darren Aronofsky", "2000"), (2, "A002",
- * "American Psycho", "Psychological", "Mary Harron", "2000"), (3, "A003",
- * "Leaving Las Vegas", "Drama/Romance", "Mike Figgis", "1995"), (4, "A004",
- * "Se7en", "Crime/Mystery", "David Fincher", "1995"), (5, "A005",
- * "The Silence of the Lambs","Thriller/Horror", "Jonathan Demme", "1991"), (6,
- * "A006", "Fight Club", "David Fincher","Drama/Thriller","1999");
+   DELETE FROM movies; 
+   INSERT INTO movies(sno, movieID, title, genre, director,release_year) 
+   VALUES 
+   (1, "A001", "Requiem for a Dream", "Psychological/Horror", "Darren Aronofsky", "2000"), 
+   (2, "A002", "American Psycho", "Psychological", "Mary Harron", "2000"), 
+   (3, "A003", "Leaving Las Vegas", "Drama/Romance", "Mike Figgis", "1995"), 
+   (4, "A004","Se7en", "Crime/Mystery", "David Fincher", "1995"), 
+   (5, "A005","The Silence of the Lambs","Thriller/Horror", "Jonathan Demme", "1991"), 
+   (6, "A006", "Fight Club", "David Fincher","Drama/Thriller","1999");
  */
