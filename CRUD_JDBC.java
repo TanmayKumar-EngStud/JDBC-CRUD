@@ -103,7 +103,75 @@ class Mysql {
 			System.out.println("Error (insertion): " + e.getMessage());
 		}
 	}
+	// Code for inserting multiple values
+	public void insertMul(String tabName, String[][] values) {
+		HashMap<String, String> map = getSchema(tabName);
+		String[][] datatype = new String[map.size()][2];
+		Set<Entry<String, String>> entries = map.entrySet();
+		Iterator<Entry<String, String>> entriesIterator = entries.iterator();
 
+		int i = 0;
+		while (entriesIterator.hasNext()) {
+
+			Entry<String, String> mapping = entriesIterator.next();
+
+			datatype[i][0] = mapping.getKey().toString();
+			datatype[i][1] = mapping.getValue().toString();
+
+			i++;
+		}
+		if(datatype.length != values[0].length) {
+			System.out.print("Error the total number of given values are invalid.");
+			return;
+		}
+		String sql = "INSERT INTO "+tabName+ "(";
+		for( i =0; i < datatype.length; i++) {
+			sql +=datatype[i][0];
+			if(i != datatype.length -1) {
+				sql += ", ";
+			}
+		}
+		sql += ") \n VALUES";
+		for(i =0; i < values.length; i++) {
+			sql += "\n\t(";
+			for(int j =0; j< values[0].length; j++) {
+				sql += "?";
+				if(j != values[0].length -1) {
+					sql += ", ";
+				}
+			}
+			sql += ")";
+			if(i != values.length-1 ) {
+				sql += ",";
+			}
+		}
+		sql +=";";
+//		System.out.println(sql);
+		// now we will prepare the statement.
+//		Start from here........     
+		try {
+		PreparedStatement stmt = con.prepareStatement(sql);
+		for(i =0 ; i < values.length; i++) {
+			for( int j =0; j < values[0].length; j ++) {
+				if(datatype[j][1].equals("varchar")) {
+					stmt.setString((i*values[0].length)+j+1, values[i][j]);
+				}else if(datatype[j][1].equals("int")) {
+					stmt.setInt((i*values[0].length)+j+1, Integer.parseInt(values[i][j]));
+				}
+			}
+			
+		}
+//		System.out.println(stmt);
+		int result = stmt.executeUpdate();
+		if(result != 0) {
+			System.out.println("All the values are inserted Successfully!");
+		}else {
+			System.out.println("Sorry but the values are not inserted in the table due to some issue");
+		}
+		}catch(Exception e) {
+			System.out.println("Error (Insert multiple): "+ e.getMessage());
+		}
+	}
 	// Code for read
 	public ArrayList<String[]> read(String tabName, String ColName, String val) {
 		HashMap<String, String> map = getSchema(tabName);
@@ -123,7 +191,7 @@ class Mysql {
 		}
 		int length = map.size();
 		String sql = "SELECT * FROM " + tabName + " WHERE " + ColName + "= '" + val + "';";
-		System.out.println("Query in read :- " + sql);
+//		System.out.println("Query in read :- " + sql);
 		ArrayList<String[]> ret = new ArrayList<String[]>();
 		try {
 			Statement stmt = con.createStatement();
@@ -230,7 +298,14 @@ public class CRUD_JDBC {
 		// table_schema = 'test' and table_name = 'movies';
 
 		mysql.insert("movies", values);
-
+		
+		
+		// 1.1 multiple Insertion
+		String[][] mulValues  ={{ "10", "Tanmay", "Horror", "2005", "A008", "Night of the living dead" },
+											    { "9", "Jack", "Horror", "2019", "A007", "Insidious Chapter II" },
+											    { "8", "Raymond", "Horror", "2008", "A009", "The house that jack build" }};
+		mysql.insertMul("movies", mulValues);
+		
 		// 2. Delete
 		String[] KeyValue = { "movies", "director", "Tanmay" };
 		mysql.delete(KeyValue[0], KeyValue[1], KeyValue[2]);
